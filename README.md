@@ -16,37 +16,41 @@ El sistema cubre escenarios reales de negocio como disponibilidad, agotamiento d
 
 ```mermaid
 flowchart LR
-    A[Consumidor de reservas] -->|Solicita inventario por SKU| B[API del proveedor]
-    C[Contrato Pact] --> D[Pruebas del consumidor]
-    C --> E[Verificación del proveedor]
-    F[GitHub Actions] --> D
-    F --> E
+    U[Usuario o proceso de negocio] --> C[Consumidor]
+    C -->|Define la expectativa| PACT[Contrato Pact]
+    C -->|GET /inventory/:sku| API[Proveedor de inventario]
+    API -->|Respuesta JSON| C
+    PACT --> V[Verificación del proveedor]
+    CI[GitHub Actions] --> C
+    CI --> V
 ```
 
 ## Diagrama de flujo de datos
 
 ```mermaid
 flowchart TD
-    U[Usuario o proceso de negocio] --> C1[Consumidor valida SKU]
-    C1 -->|Solicitud HTTP GET /inventory/:sku| P[Proveedor de inventario]
-    P -->|Respuesta JSON| C2[Consumidor interpreta estado]
-    C2 -->|Disponible| R1[Reserva aceptada]
-    C2 -->|Sin stock| R2[Reserva rechazada]
-    C2 -->|SKU no encontrado| R3[Error controlado]
+    A[Solicita SKU] --> B[Consumidor prepara la petición]
+    B --> C[GET /inventory/:sku]
+    C --> D[Proveedor valida el SKU]
+    D -->|Disponible| E[Respuesta: stock disponible]
+    D -->|Sin stock| F[Respuesta: OUT_OF_STOCK]
+    D -->|No existe| G[Respuesta: SKU_NOT_FOUND]
+    E --> H[Consumidor toma la decisión]
+    F --> H
+    G --> H
 ```
 
-## Diagramas de casos de uso
+## Diagrama de casos de uso
 
 ```mermaid
 flowchart LR
-    U[Usuario] --> UC1[Consultar inventario]
-    U --> UC2[Validar disponibilidad]
-    U --> UC3[Procesar reserva]
-
-    UC1 --> S1[Sistema consulta SKU]
-    S1 --> S2[Proveedor devuelve información]
-    S2 --> UC2
-    UC2 --> UC3
+    U[Usuario] --> UC1[Consultar SKU disponible]
+    U --> UC2[Consultar SKU sin stock]
+    U --> UC3[Consultar SKU inexistente]
+    UC1 --> S[Sistema valida el contrato]
+    UC2 --> S
+    UC3 --> S
+    S --> V[Proveedor cumple la especificación]
 ```
 
 ### Casos de uso principales
