@@ -188,6 +188,3 @@ El workflow de GitHub Actions ejecuta las pruebas del consumidor, genera el cont
 - La validación se basa en evidencia ejecutada y pruebas reproducibles.
 - La solución se enfoca en un caso realista de contract testing, manteniendo un diseño claro y profesional.
 
-## Observación
-
-La carpeta docs contiene materiales complementarios del proyecto, como el manual técnico y el manual de usuario, y se mantiene separada del repositorio público para una presentación más ordenada y profesional.
