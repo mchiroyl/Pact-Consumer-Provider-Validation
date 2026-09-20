@@ -15,7 +15,12 @@ describe('Provider verification', () => {
   let server: ReturnType<typeof app.listen>;
 
   beforeAll(async () => {
-    server = app.listen(3001);
+    server = app.listen(0);
+
+    await new Promise<void>((resolve, reject) => {
+      server.once('listening', () => resolve());
+      server.once('error', (err) => reject(err));
+    });
   });
 
   afterAll(async () => {
@@ -29,10 +34,15 @@ describe('Provider verification', () => {
 
   it('verifies the consumer contract against the real provider', async () => {
     const pactFile = path.resolve(process.cwd(), '../pact/pacts/reservation-consumer-inventory-provider.json');
+    const address = server.address();
+
+    if (!address || typeof address === 'string') {
+      throw new Error('Provider server did not bind to a TCP port.');
+    }
 
     const verifier = new Verifier({
       provider: 'inventory-provider',
-      providerBaseUrl: 'http://localhost:3001',
+      providerBaseUrl: `http://localhost:${address.port}`,
       pactUrls: [pactFile],
       stateHandlers: providerStates,
       logLevel: 'INFO',
