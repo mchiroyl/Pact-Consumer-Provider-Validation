@@ -1,0 +1,16 @@
+{
+  "name": "reservation-inventory-pact",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "consumer",
+    "provider"
+  ],
+  "scripts": {
+    "test:consumer": "npm --workspace consumer run test",
+    "test:provider": "npm --workspace provider run test",
+    "pact:generate": "npm --workspace consumer run pact:generate",
+    "verify:provider": "npm --workspace provider run verify",
+    "ci": "npm run test:consumer && npm run pact:generate && npm run verify:provider"
+  }
+}

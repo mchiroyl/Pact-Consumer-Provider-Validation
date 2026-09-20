@@ -1,0 +1,19 @@
+{
+  "name": "inventory-provider",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run test/provider.verification.spec.ts --reporter=verbose",
+    "verify": "vitest run test/provider.verification.spec.ts --reporter=verbose"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@pact-foundation/pact": "^15.0.0",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.10.1",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
