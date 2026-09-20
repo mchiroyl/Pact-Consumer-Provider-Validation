@@ -162,12 +162,9 @@ sequenceDiagram
     participant PC as Contrato Pact
 
     C->>PC: Define la expectativa de la API
-    C->>C: Ejecuta pruebas del consumidor
-    C->>PC: Genera el contrato pactado
+    PC-->>P: Contrato pactado disponible
     P->>PC: Verifica el contrato con la implementación real
-    P-->>C: Confirma compatibilidad
-
-    Note over C,P: El consumidor define el acuerdo y el proveedor lo valida con evidencia real.
+    PC-->>C: Confirma compatibilidad
 ```
 
 ## Inicio rápido
