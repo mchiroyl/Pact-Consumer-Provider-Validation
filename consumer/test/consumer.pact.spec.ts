@@ -10,7 +10,6 @@ const provider = new PactV3({
   consumer: 'reservation-consumer',
   provider: 'inventory-provider',
   port: 1234,
-  log: path.resolve(process.cwd(), '../pact/logs/consumer.log'),
   dir: path.resolve(process.cwd(), '../pact/pacts'),
 });
 
